@@ -7,3 +7,5 @@ SCREEN_HEIGHT = 540
 # Fixed map dimensions (for minimap and layout)
 MAP_ROWS = 10
 MAP_COLS = 10
+
+FULLSCREEN = False

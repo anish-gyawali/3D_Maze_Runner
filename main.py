@@ -188,15 +188,26 @@ def main():
     global wall_tex, floor_tex
     glut.glutInit()
     pygame.init()
-    pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT), pygame.OPENGL | pygame.DOUBLEBUF)
+
+    if settings.FULLSCREEN:
+        info = pygame.display.Info()
+        settings.SCREEN_WIDTH = info.current_w
+        settings.SCREEN_HEIGHT = info.current_h
+        pygame.display.set_mode((0, 0), pygame.OPENGL | pygame.DOUBLEBUF | pygame.FULLSCREEN)
+    else:
+        pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT), pygame.OPENGL | pygame.DOUBLEBUF)
+
+    # OpenGL setup
     glEnable(GL_DEPTH_TEST)
     glEnable(GL_TEXTURE_2D)
     glClearColor(0.5, 0.7, 1.0, 1.0)
     glMatrixMode(GL_PROJECTION)
     gluPerspective(60, settings.SCREEN_WIDTH/settings.SCREEN_HEIGHT, 0.1, 100.0)
     glMatrixMode(GL_MODELVIEW)
+
     wall_tex = load_texture('textures/brick.png')
     floor_tex = load_texture('textures/stone.png')
+
     player = Player(x=START_POS[0], z=START_POS[1])
     clock = pygame.time.Clock()
     won = False
